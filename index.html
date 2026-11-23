@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job's Crest Holdings Limited — Plumbing · Solar · Painting · Digital</title>
+<meta name="description" content="Job's Crest Holdings Limited — a private practice in home craft and digital engineering. Plumbing, solar, painting, app and web development, executed with precision.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS (Matched to Logo) ============ */
+  :root {
+    --ink: #0A1931;         /* Deep Navy background from logo */
+    --ink-2: #0E2241;       /* Slightly lighter navy for panels */
+    --ink-3: #122a52;
+    --cream: #F4F6F9;       /* Crisp white for text */
+    --cream-dim: #A9B4C2;   /* Muted blue-grey */
+    --gold: #D4AF37;        /* Metallic gold from logo */
+    --gold-bright: #EBCB64; /* Bright gold for highlights */
+    --line: rgba(212, 175, 55, 0.28);
+    --line-soft: rgba(244, 246, 249, 0.10);
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Jost', 'Helvetica Neue', sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --header-h: 96px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--gold); color: var(--ink); }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { width: 90%; max-width: 1280px; margin: 0 auto; }
+
+  /* Anchor offset so the fixed header never covers a jump target */
+  section[id], article[id], footer[id] { scroll-margin-top: var(--header-h); }
+
+  /* ============ TYPOGRAPHY ============ */
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 42px; height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; }
+  h1 { font-size: clamp(2.8rem, 6.4vw, 5.6rem); letter-spacing: -0.02em; }
+  h2 { font-size: clamp(2rem, 4vw, 3.4rem); letter-spacing: -0.01em; }
+  h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+  em { font-style: italic; color: var(--gold-bright); }
+  p { color: var(--cream-dim); font-size: 1.02rem; }
+
+  /* ============ BUTTONS ============ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    padding: 1.05rem 2.2rem;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.5s var(--ease);
+    cursor: pointer;
+  }
+  .btn::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease);
+    z-index: 0;
+  }
+  .btn > span { position: relative; z-index: 1; }
+  .btn:hover { color: var(--ink); }
+  .btn:hover::before { transform: scaleX(1); }
+  .btn .arrow { font-size: 1rem; line-height: 1; transition: transform 0.5s var(--ease); }
+  .btn:hover .arrow { transform: translateX(6px); }
+
+  .btn-ghost { border-color: var(--line-soft); color: var(--cream); }
+  .btn-ghost::before { background: var(--cream); }
+  .btn-ghost:hover { color: var(--ink); }
+
+  /* ============ HEADER / NAV ============ */
+  header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 200;
+    padding: 1rem 0;
+    transition: padding 0.4s var(--ease), border-color 0.4s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 25, 49, 0.85);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    z-index: -1;
+    pointer-events: none;
+  }
+  header.scrolled {
+    padding: 0.6rem 0;
+    border-bottom-color: var(--line-soft);
+  }
+  header.scrolled::before { opacity: 1; }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+
+  .brand { display: block; position: relative; z-index: 300; }
+  .brand img {
+    height: 70px;
+    width: auto;
+    display: block;
+    transition: height 0.4s var(--ease);
+    mix-blend-mode: screen; 
+  }
+  header.scrolled .brand img { height: 55px; }
+
+  /* ============ FULL SCREEN MENU ============ */
+  .menu {
+    position: fixed;
+    inset: 0;
+    background: var(--ink-2); /* Deep navy */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transform: translateY(-100%);
+    transition: transform 0.8s var(--ease);
+    z-index: 190;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .menu.open { 
+    transform: translateY(0); 
+  }
+
+  /* Menu Item Animations */
+  .menu li {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  }
+  .menu.open li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Staggered delay */
+  .menu.open li:nth-child(1) { transition-delay: 0.1s; }
+  .menu.open li:nth-child(2) { transition-delay: 0.15s; }
+  .menu.open li:nth-child(3) { transition-delay: 0.2s; }
+  .menu.open li:nth-child(4) { transition-delay: 0.25s; }
+  .menu.open li:nth-child(5) { transition-delay: 0.3s; }
+  .menu.open li:nth-child(6) { transition-delay: 0.35s; }
+  .menu.open li:nth-child(7) { transition-delay: 0.4s; }
+
+  .menu a {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    font-weight: 400;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 0.3s var(--ease);
+  }
+  .menu a::after {
+    content: "";
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.4s var(--ease);
+  }
+  .menu a:hover { color: var(--cream); }
+  .menu a:hover::after { width: 100%; }
+  
+  /* Special styling for the upload link */
+  .menu a.menu-upload {
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .menu a.menu-upload:hover { color: var(--gold-bright); }
+  .menu a.menu-upload::after { background: var(--gold-bright); }
+
+  /* Styled CTA inside the menu */
+  .menu a.menu-cta {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    padding: 0.8rem 1.8rem;
+    color: var(--gold);
+    margin-top: 1rem;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease);
+  }
+  .menu a.menu-cta::after { display: none; }
+  .menu a.menu-cta:hover {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .burger {
+    display: flex; /* Always visible now */
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 300;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .burger span {
+    display: block;
+    width: 30px; /* Slightly larger for desktop */
+    height: 1.5px;
+    background: var(--cream);
+    transition: transform 0.4s var(--ease), opacity 0.4s var(--ease), background 0.4s var(--ease);
+  }
+  .burger.on span { background: var(--gold-bright); }
+  .burger.on span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .burger.on span:nth-child(2) { opacity: 0; }
+  .burger.on span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 6rem;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero-bg { position: absolute; inset: 0; z-index: -2; }
+  .hero-bg img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(20%) contrast(1.1) brightness(0.5) sepia(20%) hue-rotate(190deg);
+    transform: scale(1.06);
+    animation: slowZoom 24s var(--ease) forwards;
+  }
+  @keyframes slowZoom { from { transform: scale(1.14); } to { transform: scale(1.0); } }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(to top, var(--ink) 2%, rgba(10,25,49,0.4) 42%, rgba(10,25,49,0.6) 100%),
+      linear-gradient(to right, rgba(10,25,49,0.8) 0%, rgba(10,25,49,0.1) 55%);
+  }
+  .hero-inner { width: 100%; }
+  .hero .eyebrow { margin-bottom: 1.6rem; }
+  .hero h1 { max-width: 15ch; margin-bottom: 1.8rem; }
+  .hero .lead {
+    max-width: 52ch;
+    font-size: 1.12rem;
+    color: var(--cream-dim);
+    margin-bottom: 2.6rem;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .hero-meta {
+    position: absolute;
+    right: 0; bottom: 6rem;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 1.2rem;
+    writing-mode: vertical-rl;
+    font-size: 0.68rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--cream-dim);
+  }
+  .hero-meta .rule { width: 1px; height: 70px; background: var(--gold); }
+
+  .hero-index {
+    position: absolute;
+    left: 5%; bottom: 2rem;
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    font-size: 0.68rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--cream-dim);
+  }
+  .hero-index a {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: color 0.35s var(--ease), transform 0.35s var(--ease);
+  }
+  .hero-index a b { color: var(--gold); font-weight: 500; transition: color 0.35s var(--ease); }
+  .hero-index a:hover { color: var(--cream); transform: translateY(-2px); }
+  .hero-index a:hover b { color: var(--gold-bright); }
+
+  /* ============ MARQUEE ============ */
+  .marquee {
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 1.6rem 0;
+    overflow: hidden;
+    background: var(--ink-2);
+  }
+  .marquee-track {
+    display: flex; gap: 4rem;
+    white-space: nowrap;
+    width: max-content;
+    animation: slide 32s linear infinite;
+  }
+  .marquee-track span {
+    font-family: var(--serif);
+    font-size: 1.4rem; font-style: italic;
+    color: var(--cream-dim);
+    display: inline-flex; align-items: center; gap: 4rem;
+  }
+  .marquee-track span::after { content: "✦"; color: var(--gold); font-style: normal; font-size: 0.9rem; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ============ SECTION SHELL ============ */
+  section.block { padding: 8rem 0; }
+  .section-head { margin-bottom: 5rem; max-width: 760px; }
+  .section-head h2 { margin: 1.4rem 0 1.2rem; }
+
+  /* ============ SERVICES ============ */
+  .service {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    align-items: stretch;
+    min-height: 540px;
+    border-top: 1px solid var(--line-soft);
+    position: relative;
+  }
+  .service:last-of-type { border-bottom: 1px solid var(--line-soft); }
+
+  .service:nth-of-type(even) .service-media { order: 2; }
+  .service:nth-of-type(even) .service-body  { order: 1; }
+
+  .service-media { overflow: hidden; position: relative; min-height: 420px; }
+  .service-media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%) contrast(1.05) brightness(0.7) sepia(15%) hue-rotate(190deg);
+    transition: transform 1.2s var(--ease), filter 0.8s var(--ease), opacity 0.25s ease;
+  }
+  .service:hover .service-media img {
+    transform: scale(1.05);
+    filter: grayscale(0%) contrast(1.05) brightness(0.9);
+  }
+  .service-media::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,25,49,0.6), transparent 55%);
+    pointer-events: none;
+  }
+  .service-media .num {
+    position: absolute; top: 2rem; left: 2rem;
+    font-family: var(--serif);
+    font-size: 1rem; letter-spacing: 0.2em;
+    color: var(--gold-bright);
+    z-index: 2;
+    border: 1px solid var(--line);
+    padding: 0.5rem 0.9rem;
+    backdrop-filter: blur(6px);
+    background: rgba(10,25,49,0.4);
+  }
+
+  .service-body {
+    padding: 4rem 4.5rem;
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--ink-2);
+  }
+  .service-body .eyebrow { margin-bottom: 1.4rem; }
+  .service-body h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: 1.4rem; }
+  .service-body p { margin-bottom: 1.8rem; }
+
+  .feature-list { list-style: none; margin-bottom: 2.4rem; display: grid; gap: 0.75rem; }
+  .feature-list li {
+    display: flex; align-items: baseline; gap: 0.9rem;
+    font-size: 0.94rem; color: var(--cream); font-weight: 300;
+  }
+  .feature-list li::before {
+    content: "";
+    width: 22px; height: 1px; background: var(--gold);
+    flex-shrink: 0; transform: translateY(-3px);
+  }
+
+  .thumbs { display: flex; gap: 0.75rem; margin-bottom: 2.4rem; }
+  .thumbs button {
+    padding: 0; border: 1px solid var(--line-soft);
+    background: none; cursor: pointer;
+    width: 84px; height: 64px;
+    overflow: hidden;
+    transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+  .thumbs button img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(40%) brightness(0.6);
+    transition: filter 0.4s var(--ease);
+  }
+  .thumbs button:hover,
+  .thumbs button.active { border-color: var(--gold); transform: translateY(-3px); }
+  .thumbs button:hover img,
+  .thumbs button.active img { filter: grayscale(0%) brightness(0.95); }
+
+  .link-underline {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    font-family: var(--sans);
+    font-size: 0.76rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+    padding: 0 0 6px;
+    border: none;
+    border-bottom: 1px solid var(--gold);
+    background: none; cursor: pointer;
+    align-self: flex-start;
+    transition: gap 0.4s var(--ease), color 0.3s var(--ease);
+  }
+  .link-underline:hover { gap: 1.3rem; color: var(--gold-bright); }
+
+  /* ============ ATELIER / ABOUT ============ */
+  .manifesto {
+    background: var(--ink-2);
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .manifesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .manifesto-media { position: relative; aspect-ratio: 4/5; overflow: hidden; }
+  .manifesto-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(30%) contrast(1.05) brightness(0.75) sepia(15%) hue-rotate(190deg);
+  }
+  .manifesto-media::before {
+    content: "";
+    position: absolute; inset: 18px;
+    border: 1px solid var(--gold);
+    z-index: 2; pointer-events: none; opacity: 0.55;
+  }
+  .manifesto-copy h2 { margin: 1.4rem 0 1.6rem; }
+  .manifesto-copy > p { margin-bottom: 1.4rem; }
+
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem; margin-top: 2.6rem;
+    border-top: 1px solid var(--line-soft);
+    padding-top: 2rem;
+  }
+  .stat b {
+    display: block;
+    font-family: var(--serif);
+    font-size: 2.4rem; color: var(--gold-bright);
+    font-weight: 500; line-height: 1; margin-bottom: 0.5rem;
+  }
+  .stat span { font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--cream-dim); }
+
+  /* ============ GALLERY STRIP ============ */
+  .strip { padding: 8rem 0 0; }
+  .strip-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 2rem; margin-bottom: 3.2rem; flex-wrap: wrap;
+  }
+  .strip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  
+  .strip-item { position: relative; overflow: hidden; aspect-ratio: 3/4; cursor: pointer; }
+  
+  /* Infinite stagger logic for dynamic uploads */
+  .strip-item:nth-child(4n+1), .strip-item:nth-child(4n+4) { margin-top: 3rem; }
+  .strip-item:nth-child(4n+2), .strip-item:nth-child(4n+3) { margin-bottom: 3rem; }
+  
+  .strip-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(50%) brightness(0.6) sepia(10%) hue-rotate(190deg);
+    transition: transform 1.1s var(--ease), filter 0.7s var(--ease);
+  }
+  .strip-item:hover img { transform: scale(1.06); filter: grayscale(0%) brightness(0.9); }
+  .strip-item::after {
+    content: attr(data-label);
+    position: absolute; left: 1.2rem; bottom: 1.2rem;
+    font-size: 0.66rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--cream);
+    opacity: 0; transform: translateY(8px);
+    transition: 0.5s var(--ease);
+    z-index: 2;
+  }
+  .strip-item:hover::after { opacity: 1; transform: translateY(0); }
+
+  /* Delete Button */
+  .delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(10, 25, 49, 0.85);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 1.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.3s var(--ease);
+    z-index: 5;
+    backdrop-filter: blur(4px);
+  }
+  .strip-item:hover .delete-btn {
+    opacity: 1;
+  }
+  .delete-btn:hover {
+    background: var(--gold);
+    color: var(--ink);
+    transform: scale(1.1);
+    border-color: var(--gold-bright);
+  }
+
+  /* ============ TESTIMONIALS ============ */
+  .testimonials {
+    background: var(--ink-3);
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonials::before {
+    content: "“";
+    position: absolute;
+    top: -2rem; left: 2%;
+    font-family: var(--serif);
+    font-size: 25rem;
+    line-height: 1;
+    color: var(--line-soft);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .testi-card {
+    background: var(--ink-2);
+    border: 1px solid var(--line-soft);
+    padding: 3rem 2.5rem;
+    transition: var(--ease) 0.4s;
+    display: flex;
+    flex-direction: column;
+  }
+  .testi-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  }
+  .testi-stars {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 1.5rem;
+  }
+  .testi-card blockquote {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+  }
+  .testi-author {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .testi-author span {
+    display: block;
+    color: var(--cream-dim);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    margin-top: 0.3rem;
+    font-weight: 400;
+  }
+
+  /* ============ QUOTE ============ */
+  .quote {
+    text-align: center; padding: 9rem 0;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .quote blockquote {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+    line-height: 1.4; max-width: 22ch;
+    margin: 0 auto 2rem; color: var(--cream);
+  }
+  .quote cite {
+    font-style: normal; font-size: 0.72rem;
+    letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold);
+  }
+
+  /* ============ CONTACT ============ */
+  .contact { padding: 8rem 0; }
+  
+  /* Adjusted Contact Grid to center the content since the form is gone */
+  .contact-grid { 
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .contact-copy h2 { margin: 1.4rem 0 1.6rem; }
+  .contact-copy > p { margin: 0 auto 2.6rem; max-width: 42ch; }
+
+  .contact-details { 
+    display: inline-grid; 
+    gap: 1.8rem;
+    text-align: left;
+    margin-bottom: 3rem;
+  }
+  .detail {
+    display: grid; grid-template-columns: 120px 1fr;
+    gap: 1rem; padding-bottom: 1.6rem;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .detail dt { font-size: 0.66rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
+  .detail dd { color: var(--cream); font-size: 1rem; }
+  .detail dd small { display: block; color: var(--cream-dim); font-size: 0.85rem; margin-top: 4px; }
+
+  /* ============ FOOTER ============ */
+  footer { border-top: 1px solid var(--line-soft); padding: 4rem 0 3rem; background: var(--ink-2); }
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .foot .brand img { height: 90px; mix-blend-mode: screen; }
+  .foot p { font-size: 0.78rem; color: var(--cream-dim); letter-spacing: 0.05em; }
+  .foot-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+  .foot-links a {
+    font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--cream-dim); transition: color 0.3s var(--ease);
+  }
+  .foot-links a:hover { color: var(--gold); }
+
+  /* ============ LIGHTBOX ============ */
+  .lb {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(6,12,24,0.96);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 4vw; backdrop-filter: blur(8px);
+  }
+  .lb.on { display: flex; animation: fadeIn 0.4s var(--ease); }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .lb img {
+    max-width: 92%; max-height: 88vh; object-fit: contain;
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+  .lb-close {
+    position: absolute; top: 2rem; right: 2.2rem;
+    width: 48px; height: 48px; line-height: 1;
+    background: none; border: 1px solid var(--line);
+    color: var(--cream); border-radius: 50%;
+    font-size: 1.4rem; cursor: pointer;
+    transition: 0.4s var(--ease);
+  }
+  .lb-close:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); transform: rotate(90deg); }
+
+  /* ============ FLOATING CONTACT BUTTONS ============ */
+  .float-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 400;
+  }
+  .float-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), opacity 0.3s var(--ease);
+    position: relative;
+    cursor: pointer;
+  }
+  .float-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  }
+  .float-btn svg {
+    width: 26px;
+    height: 26px;
+    fill: currentColor;
+    z-index: 2;
+  }
+  
+  /* Specific Button Colors */
+  .wa-btn { background-color: #25D366; color: #FFF; }
+  .call-btn { background-color: var(--gold); color: var(--ink); }
+  .email-btn { background-color: var(--cream); color: var(--ink); }
+
+  /* Pulse Ring Backgrounds */
+  .float-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    z-index: 1;
+    animation: wa-pulse 2s infinite;
+  }
+  .wa-btn::before { background-color: #25D366; }
+  .call-btn::before { background-color: var(--gold); }
+  .email-btn::before { background-color: var(--cream); }
+
+  @keyframes wa-pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  /* Hide when mobile menu is open */
+  .menu-open .float-container {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0);
+  }
+
+  /* ============ REVEAL ============ */
+  .reveal {
+    opacity: 0; transform: translateY(38px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ============ AUTH MODAL ============ */
+  .auth-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 600;
+    background: rgba(10, 25, 49, 0.95);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s var(--ease);
+  }
+  .auth-modal.on {
+    display: flex;
+    opacity: 1;
+  }
+  .auth-box {
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.4s var(--ease);
+  }
+  .auth-modal.on .auth-box {
+    transform: translateY(0);
+  }
+  .auth-box h3 {
+    font-family: var(--serif);
+    color: var(--gold-bright);
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+  }
+  .auth-box p {
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+  }
+  .auth-field {
+    margin-bottom: 1.5rem;
+  }
+  .auth-field label {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-bottom: 0.5rem;
+  }
+  .auth-field input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 1rem;
+    padding: 0.7rem 0;
+    outline: none;
+    transition: border-color 0.3s var(--ease);
+  }
+  .auth-field input:focus {
+    border-color: var(--gold);
+  }
+  .auth-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    display: none;
+    margin-bottom: 1.5rem;
+  }
+  .auth-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .auth-actions .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.7rem;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1080px) {
+    .testi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 980px) {
+    .service { grid-template-columns: 1fr; }
+    .service:nth-of-type(even) .service-media { order: 0; }
+    .service:nth-of-type(even) .service-body  { order: 0; }
+    .service-body { padding: 3rem 2.2rem; }
+    .manifesto-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+    .manifesto-media { aspect-ratio: 16/10; }
+    .hero-meta { display: none; }
+    .strip-grid { grid-template-columns: repeat(2, 1fr); }
+    .strip-item:nth-child(n) { margin: 0; }
+  }
+
+  @media (max-width: 760px) {
+    :root { --header-h: 78px; }
+    header { padding: 0.8rem 0; }
+    .brand img { height: 55px; }
+    header.scrolled .brand img { height: 45px; }
+    
+    section.block, .contact, .quote { padding: 5rem 0; }
+    .strip { padding-top: 5rem; }
+    .service-media { min-height: 300px; }
+    .thumbs button { width: 70px; height: 54px; }
+    
+    /* Adjusted detail grid for mobile centering */
+    .detail { grid-template-columns: 1fr; gap: 0.3rem; text-align: center; }
+    
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    .hero { padding-bottom: 4rem; }
+    .hero-index { gap: 1rem; font-size: 0.58rem; letter-spacing: 0.18em; bottom: 1rem; }
+    .foot { flex-direction: column; text-align: center; gap: 1.5rem; }
+    .foot .brand img { height: 80px; margin: 0 auto; }
+    .foot-links { justify-content: center; }
+    
+    .testi-grid { grid-template-columns: 1fr; }
+    .testi-card { padding: 2.5rem 1.5rem; }
+    .testimonials::before { font-size: 15rem; top: 0; }
+    .strip-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+    /* Menu tweaks for mobile */
+    .menu { gap: 1.5rem; }
+    .menu a { font-size: 0.95rem; }
+
+    /* Adjust floating buttons on mobile */
+    .float-container {
+      bottom: 1.5rem;
+      right: 1.5rem;
+      gap: 0.8rem;
+    }
+    .float-btn {
+      width: 50px;
+      height: 50px;
+    }
+    .float-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .marquee-track, .hero-bg img, .float-btn::before { animation: none !important; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="header">
+  <div class="wrap nav">
+    <a href="#top" class="brand">
+      <img src="logo.png" alt="Job's Crest Holdings Limited">
+    </a>
+    
+    <!-- All navigation items are now inside the menu -->
+    <ul class="menu" id="menu">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#atelier">Atelier</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" id="triggerUpload" class="menu-upload">+ Upload Photo</a></li>
+      <li><a href="#contact" class="menu-cta">Book a Consultation</a></li>
+    </ul>
+
+    <!-- The three bars (hamburger) are always visible -->
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=2000&q=80" alt="Solar panels at dusk">
+  </div>
+
+  <div class="wrap hero-inner">
+    <span class="eyebrow reveal">Building Today · Investing Tomorrow</span>
+    <h1 class="reveal">The Art of a <em>Refined</em> Home.</h1>
+    <p class="lead reveal">
+      Plumbing, solar engineering, fine painting, and digital solutions — executed with the precision of a
+      craftsman and the discretion of a private atelier.
+    </p>
+    <div class="hero-actions reveal">
+      <a href="#services" class="btn"><span>Explore Our Crafts</span><span class="arrow">→</span></a>
+      <a href="#contact" class="btn btn-ghost"><span>Request an Estimate</span></a>
+    </div>
+  </div>
+
+  <div class="hero-meta">
+    <span>Scroll to discover</span>
+    <span class="rule"></span>
+    <span>MMXXV</span>
+  </div>
+
+  <div class="hero-index wrap">
+    <a href="#plumbing" data-goto="plumbing"><b>01</b> Plumbing</a>
+    <a href="#solar" data-goto="solar"><b>02</b> Solar</a>
+    <a href="#painting" data-goto="painting"><b>03</b> Painting</a>
+    <a href="#app-development" data-goto="app-development"><b>04</b> Application</a>
+    <a href="#web-development" data-goto="web-development"><b>05</b> Website</a>
+  </div>
+</section>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Precision Plumbing</span><span>Solar Engineering</span><span>Fine Finishes</span><span>Software Engineering</span><span>Digital Design</span>
+    <span>Precision Plumbing</span><span>Solar Engineering</span><span>Fine Finishes</span><span>Software Engineering</span><span>Digital Design</span>
+    <span>Precision Plumbing</span><span>Solar Engineering</span><span>Fine Finishes</span><span>Software Engineering</span><span>Digital Design</span>
+  </div>
+</div>
+
+<!-- ================= SERVICES ================= -->
+<section class="block" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Our Disciplines</span>
+      <h2>Five crafts. One standard of <em>excellence</em>.</h2>
+    </div>
+
+    <!-- SERVICE 01 — PLUMBING -->
+    <article class="service reveal" id="plumbing">
+      <div class="service-media">
+        <span class="num">01</span>
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1400&q=80" alt="Elegant bathroom plumbing" class="js-main">
+      </div>
+      <div class="service-body">
+        <span class="eyebrow">Plumbing</span>
+        <h3>Quiet precision, <em>invisible</em> engineering.</h3>
+        <p>From heritage fittings to modern installations, we approach plumbing as an art of restraint — flawless function, hidden in plain sight.</p>
+        <ul class="feature-list">
+          <li>Bespoke bathroom &amp; kitchen installations</li>
+          <li>Emergency repair &amp; leak detection</li>
+          <li>Water systems &amp; smart fixtures</li>
+        </ul>
+        <div class="thumbs">
+          <button class="active" data-main="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1400&q=80" aria-label="View bathroom plumbing photo">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1400&q=80" aria-label="View pipe installation photo">
+            <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=1400&q=80" aria-label="View plumbing tools photo">
+            <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+        </div>
+        <a href="#contact" class="link-underline" data-service="Plumbing">Request Plumbing <span>→</span></a>
+      </div>
+    </article>
+
+    <!-- SERVICE 02 — SOLAR -->
+    <article class="service reveal" id="solar">
+      <div class="service-media">
+        <span class="num">02</span>
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1400&q=80" alt="Solar panel installation" class="js-main">
+      </div>
+      <div class="service-body">
+        <span class="eyebrow">Solar Installation</span>
+        <h3>Power, <em>reimagined</em> in daylight.</h3>
+        <p>We design solar systems that complement architecture and disappear into the roofline — sustainable energy, delivered with elegance.</p>
+        <ul class="feature-list">
+          <li>Residential &amp; commercial solar design</li>
+          <li>Battery storage &amp; grid integration</li>
+          <li>Monitoring &amp; maintenance programs</li>
+        </ul>
+        <div class="thumbs">
+          <button class="active" data-main="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1400&q=80" aria-label="View solar array photo">
+            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1400&q=80" aria-label="View solar panels at sunset photo">
+            <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&w=1400&q=80" aria-label="View rooftop solar photo">
+            <img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+        </div>
+        <a href="#contact" class="link-underline" data-service="Solar Installation">Request Solar <span>→</span></a>
+      </div>
+    </article>
+
+    <!-- SERVICE 03 — PAINTING -->
+    <article class="service reveal" id="painting">
+      <div class="service-media">
+        <span class="num">03</span>
+        <img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1400&q=80" alt="Refined interior painting" class="js-main">
+      </div>
+      <div class="service-body">
+        <span class="eyebrow">Painting</span>
+        <h3>Colour, applied with a <em>surgeon's</em> hand.</h3>
+        <p>Fine brushes, immaculate lines, and premium pigments. We treat every wall like a canvas — because the finish is the first thing you feel.</p>
+        <ul class="feature-list">
+          <li>Interior &amp; exterior fine finishes</li>
+          <li>Heritage restoration &amp; limewash</li>
+          <li>Colour consultation &amp; sampling</li>
+        </ul>
+        <div class="thumbs">
+          <button class="active" data-main="https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1400&q=80" aria-label="View interior painting photo">
+            <img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=1400&q=80" aria-label="View paint roller photo">
+            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1595846519845-68e298c2edd8?auto=format&fit=crop&w=1400&q=80" aria-label="View painting detail photo">
+            <img src="https://images.unsplash.com/photo-1595846519845-68e298c2edd8?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+        </div>
+        <a href="#contact" class="link-underline" data-service="Painting">Request Painting <span>→</span></a>
+      </div>
+    </article>
+
+    <!-- SERVICE 04 — APPLICATION DEVELOPMENT -->
+    <article class="service reveal" id="app-development">
+      <div class="service-media">
+        <span class="num">04</span>
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80" alt="Elegant app interface design" class="js-main">
+      </div>
+      <div class="service-body">
+        <span class="eyebrow">Application Development</span>
+        <h3>Logic, wrapped in an <em>elegant</em> interface.</h3>
+        <p>From native iOS and Android applications to complex internal management tools, we build software that feels as good as it performs.</p>
+        <ul class="feature-list">
+          <li>Custom iOS &amp; Android development</li>
+          <li>Enterprise software solutions</li>
+          <li>API integration &amp; backend architecture</li>
+        </ul>
+        <div class="thumbs">
+          <button class="active" data-main="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80" aria-label="View app dashboard photo">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=1400&q=80" aria-label="View mobile app photo">
+            <img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1400&q=80" aria-label="View code on screen photo">
+            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+        </div>
+        <a href="#contact" class="link-underline" data-service="Application Development">Request App Development <span>→</span></a>
+      </div>
+    </article>
+
+    <!-- SERVICE 05 — WEBSITE DEVELOPMENT -->
+    <article class="service reveal" id="web-development">
+      <div class="service-media">
+        <span class="num">05</span>
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80" alt="Web development workspace" class="js-main">
+      </div>
+      <div class="service-body">
+        <span class="eyebrow">Website Development</span>
+        <h3>Your digital <em>showroom</em>.</h3>
+        <p>We don't just build websites; we craft digital experiences. Fast, responsive, and beautifully designed platforms that elevate your brand.</p>
+        <ul class="feature-list">
+          <li>Bespoke corporate websites</li>
+          <li>E-commerce &amp; booking systems</li>
+          <li>SEO optimization &amp; performance tuning</li>
+        </ul>
+        <div class="thumbs">
+          <button class="active" data-main="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80" aria-label="View web coding photo">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=80" aria-label="View web design photo">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+          <button data-main="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=1400&q=80" aria-label="View sleek website interface photo">
+            <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=200&q=60" alt="">
+          </button>
+        </div>
+        <a href="#contact" class="link-underline" data-service="Website Development">Request Web Development <span>→</span></a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ================= ATELIER / ABOUT ================= -->
+<section class="block manifesto" id="atelier">
+  <div class="wrap manifesto-grid">
+    <div class="manifesto-media reveal">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80" alt="Refined interior">
+    </div>
+    <div class="manifesto-copy reveal">
+      <span class="eyebrow">The Atelier</span>
+      <h2>A private practice in <em>home craft</em> &amp; <em>digital engineering</em>.</h2>
+      <p>
+        Job's Crest Holdings Limited is a small, deliberately selective studio of licensed tradespeople and software engineers —
+        plumbers, solar experts, decorative painters, and developers — working under one roof. Fewer
+        clients, deeper attention, obsessively finished work.
+      </p>
+      <p>
+        Since 2009 we've quietly maintained homes and built digital platforms for architects, collectors, and private
+        clients across the region. Our work is rarely photographed. It's simply lived in.
+      </p>
+      <div class="stat-row">
+        <div class="stat"><b>15</b><span>Years of Craft</span></div>
+        <div class="stat"><b>640+</b><span>Projects Delivered</span></div>
+        <div class="stat"><b>100%</b><span>Licensed &amp; Insured</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GALLERY STRIP ================= -->
+<section class="strip" id="gallery">
+  <div class="wrap">
+    <div class="strip-head reveal">
+      <div>
+        <span class="eyebrow">Selected Work</span>
+        <h2 style="margin-top:1.2rem;">Projects Done.</h2>
+      </div>
+      <!-- Upload button removed from here and moved to menu -->
+    </div>
+    
+    <div class="strip-grid reveal" id="galleryGrid">
+      <!-- Static initial projects -->
+      <div class="strip-item" data-label="Plumbing">
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=900&q=80" alt="Plumbing detail" class="js-lb">
+      </div>
+      <div class="strip-item" data-label="Solar">
+        <img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&w=900&q=80" alt="Solar array" class="js-lb">
+      </div>
+      <div class="strip-item" data-label="Painting">
+        <img src="https://images.unsplash.com/photo-1595846519845-68e298c2edd8?auto=format&fit=crop&w=900&q=80" alt="Fine finish" class="js-lb">
+      </div>
+      <div class="strip-item" data-label="Digital">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" alt="Digital interface" class="js-lb">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="block testimonials" id="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Client Words</span>
+      <h2>Trusted by those who <em>demand</em> more.</h2>
+    </div>
+    
+    <div class="testi-grid">
+      <!-- Testimonial 1 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“Job's Crest handled a leak that three other plumbers couldn't even locate. Not only did they find it, they restored the wall so perfectly you'd never know they were there.”</blockquote>
+        <div class="testi-author">
+          Marcus T.
+          <span>Private Client · Plumbing</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“The solar installation was seamless. They designed a system that actually complements the architecture of our roof. Our energy bills have dropped by 70%.”</blockquote>
+        <div class="testi-author">
+          Eleanor R.
+          <span>Architect · Solar Installation</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“I've never seen paint applied with such precision. The limewash finish in our living room is absolutely breathtaking. True artisans at work.”</blockquote>
+        <div class="testi-author">
+          Julian V.
+          <span>Interior Designer · Painting</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 4 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“We used them for all services on our new build. It is incredibly rare to find one team that excels at physical trades and software engineering simultaneously.”</blockquote>
+        <div class="testi-author">
+          The Bennett Family
+          <span>Residential Estate · Multi-Service</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 5 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“Discreet, punctual, and obsessively clean. They treated our home like a museum, covering everything and leaving the site spotless every single evening.”</blockquote>
+        <div class="testi-author">
+          Sophia L.
+          <span>Private Collector · Painting & Plumbing</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 6 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“The gold standard of home services. From the initial consultation to the final walkthrough, the communication and craftsmanship were flawless.”</blockquote>
+        <div class="testi-author">
+          David K.
+          <span>Property Developer · Solar</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 7 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“As a homeowner in Nakuru, finding reliable and professional contractors was a constant struggle until I found Job’s Crest. They handled our solar installation and repainted our entire home. The attention to detail was remarkable, and the team was exceptionally disciplined. I highly recommend them to anyone in the Rift Valley.”</blockquote>
+        <div class="testi-author">
+          Caroline Chelangat
+          <span>Homeowner · Nakuru</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 8 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“We contracted Job's Crest for a complete plumbing overhaul on our commercial property in Nairobi. They worked after hours to ensure our business didn't experience any downtime. Professionalism at its finest.”</blockquote>
+        <div class="testi-author">
+          Peter Njoroge
+          <span>Property Manager · Nairobi</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 9 -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“The team from Job's Crest executed a flawless exterior paint job on our beachfront villa in Mombasa. They understood the unique challenges of the coastal climate and used the highest quality materials. Absolutely stunning results.”</blockquote>
+        <div class="testi-author">
+          Amina Yusuf
+          <span>Villa Owner · Mombasa</span>
+        </div>
+      </div>
+      
+      <!-- Testimonial 10 (App/Web) -->
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>“Job's Crest developed our entire booking platform and mobile app. The UI is incredibly elegant, and the backend is rock solid. They blended technical expertise with an artistic eye for design.”</blockquote>
+        <div class="testi-author">
+          Sarah M.
+          <span>CEO · Digital Agency</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUOTE ================= -->
+<section class="quote">
+  <div class="wrap reveal">
+    <blockquote>“Elegance is refusal — the discipline to leave only what matters.”</blockquote>
+    <cite>— The Job's Crest Principle</cite>
+  </div>
+</section>
+
+<!-- ================= CONTACT (Form Removed) ================= -->
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-copy reveal">
+      <span class="eyebrow">Begin a Conversation</span>
+      <h2>Let's discuss your <em>project</em>.</h2>
+      <p>
+        Every project begins with a private site visit or a discovery call. Tell us
+        about your space or your software needs, and we'll respond within one business day.
+      </p>
+      
+      <div class="contact-details">
+        <div class="detail">
+          <dt>Studio</dt>
+          <dd>Nakuru Tamoh Plaza <small>4th Floor</small></dd>
+        </div>
+        <div class="detail">
+          <dt>Direct</dt>
+          <dd>0183456213 <small>Mon–Fri · 8am – 6pm</small></dd>
+        </div>
+        <div class="detail">
+          <dt>Email</dt>
+          <dd>jobscrestlimitedcompany@gmail.com</dd>
+        </div>
+      </div>
+
+      <!-- Direct Message CTA to replace the form -->
+      <div style="margin-top: 1rem;">
+        <a href="https://wa.me/254183456213?text=Hello%20Job's%20Crest%20Holdings%20Limited,%20I%20would%20like%20to%20inquire%20about%20your%20services." 
+           class="btn" 
+           target="_blank" 
+           rel="noopener noreferrer">
+          <span>Message us on WhatsApp</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap foot">
+    <a href="#top" class="brand">
+      <img src="logo.png" alt="Job's Crest Holdings Limited">
+    </a>
+    <p>© 2025 Job's Crest Holdings Limited. All rights reserved.</p>
+    <ul class="foot-links">
+      <li><a href="#plumbing">Plumbing</a></li>
+      <li><a href="#solar">Solar</a></li>
+      <li><a href="#painting">Painting</a></li>
+      <li><a href="#app-development">App</a></li>
+      <li><a href="#web-development">Web</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ================= LIGHTBOX ================= -->
+<div class="lb" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close image">×</button>
+  <img id="lbImg" src="" alt="Enlarged view">
+</div>
+
+<!-- ================= AUTH LOGIN MODAL ================= -->
+<div class="auth-modal" id="authModal">
+  <div class="auth-box">
+    <h3>Authentication Required</h3>
+    <p>Please enter your credentials to upload project photos.</p>
+    
+    <div class="auth-field">
+      <label for="authUser">Username</label>
+      <input type="text" id="authUser" placeholder="Enter username" autocomplete="off">
+    </div>
+    
+    <div class="auth-field">
+      <label for="authPass">Password</label>
+      <input type="password" id="authPass" placeholder="Enter password">
+    </div>
+    
+    <div class="auth-error" id="authError">Invalid username or password. Please try again.</div>
+    
+    <div class="auth-actions">
+      <button class="btn btn-ghost" id="authCancel">Cancel</button>
+      <button class="btn" id="authSubmit">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HIDDEN FILE INPUT ================= -->
+<input type="file" id="projectUpload" accept="image/*" multiple style="display: none;">
+
+<!-- ================= FLOATING CONTACT BUTTONS ================= -->
+<div class="float-container">
+  
+  <!-- EMAIL BUTTON -->
+  <a href="mailto:jobscrestlimitedcompany@gmail.com?subject=Inquiry%20from%20Website" class="float-btn email-btn" aria-label="Send us an Email" title="Send Email">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
+    </svg>
+  </a>
+  
+  <!-- CALL BUTTON -->
+  <a href="tel:+254183456213" id="callButton" class="float-btn call-btn" aria-label="Call us" title="Call Us">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/>
+    </svg>
+  </a>
+
+  <!-- WHATSAPP BUTTON -->
+  <a href="https://wa.me/254183456213?text=Hello%20Job's%20Crest%20Holdings%20Limited,%20I%20would%20like%20to%20inquire%20about%20your%20services." 
+     class="float-btn wa-btn" 
+     target="_blank" 
+     rel="noopener noreferrer" 
+     aria-label="Chat with Job's Crest on WhatsApp"
+     title="Chat on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+    </svg>
+  </a>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+(function () {
+  'use strict';
+
+  var header       = document.getElementById('header');
+  var burger       = document.getElementById('burger');
+  var menu         = document.getElementById('menu');
+  var lightbox     = document.getElementById('lightbox');
+  var lbImg        = document.getElementById('lbImg');
+  var lbClose      = document.getElementById('lbClose');
+  var galleryGrid  = document.getElementById('galleryGrid');
+  var projectUpload= document.getElementById('projectUpload');
+  
+  // Auth Elements
+  var triggerUpload = document.getElementById('triggerUpload');
+  var authModal     = document.getElementById('authModal');
+  var authUser      = document.getElementById('authUser');
+  var authPass      = document.getElementById('authPass');
+  var authError     = document.getElementById('authError');
+  var authCancel    = document.getElementById('authCancel');
+  var authSubmit    = document.getElementById('authSubmit');
+  
+  // Call Button
+  var callButton    = document.getElementById('callButton');
+
+  /* --- HEADER --- */
+  function onScroll() {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* --- FULL SCREEN MENU --- */
+  var menuOpen = false;
+  function setMenu(open) {
+    menuOpen = open;
+    burger.classList.toggle('on', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    document.body.classList.toggle('menu-open', open);
+  }
+
+  burger.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setMenu(!menuOpen);
+  });
+
+  // Close menu when any link inside is clicked
+  menu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { 
+      // Small delay so the user sees the click before the menu closes
+      setTimeout(function() { setMenu(false); }, 100); 
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menuOpen) setMenu(false);
+  });
+  
+  // No resize listener needed since it's always a full screen menu
+
+  /* --- REVEAL ON SCROLL --- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* --- UTILS --- */
+  function scrollToEl(el) {
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function flash(el, cls, ms) {
+    if (!el) return;
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+    setTimeout(function () { el.classList.remove(cls); }, ms);
+  }
+
+  /* --- HERO INDEX JUMPS --- */
+  document.querySelectorAll('[data-goto]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var target = document.getElementById(link.getAttribute('data-goto'));
+      if (!target) return;
+      scrollToEl(target);
+      flash(target, 'flash', 1700);
+    });
+  });
+
+  /* --- REQUEST SERVICE BUTTONS (WHATSAPP REDIRECT) --- */
+  document.querySelectorAll('[data-service]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      var service = el.getAttribute('data-service');
+      
+      // Format the message for WhatsApp
+      var message = "Hello Job's Crest Holdings Limited, I would like to request a quote for " + service + ".";
+      
+      // Encode the message and append to the WhatsApp API URL
+      var whatsappUrl = "https://wa.me/254183456213?text=" + encodeURIComponent(message);
+      
+      // Open WhatsApp in a new tab
+      window.open(whatsappUrl, '_blank');
+    });
+  });
+
+  /* --- THUMB SWAP --- */
+  document.querySelectorAll('.service').forEach(function (svc) {
+    var main = svc.querySelector('.js-main');
+    var buttons = svc.querySelectorAll('.thumbs button');
+    if (!main) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (btn.classList.contains('active')) return;
+        var src = btn.getAttribute('data-main');
+        if (!src) return;
+
+        buttons.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        main.style.opacity = '0';
+        var preload = new Image();
+        var swapped = false;
+
+        function swap() {
+          if (swapped) return;
+          swapped = true;
+          main.src = src;
+          main.style.opacity = '1';
+        }
+
+        preload.onload = swap;
+        preload.onerror = swap;
+        preload.src = src;
+        setTimeout(swap, 400);
+      });
+    });
+  });
+
+  /* --- LIGHTBOX --- */
+  function openLightbox(src) {
+    lbImg.src = src;
+    lightbox.classList.add('on');
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.querySelectorAll('.strip-item .js-lb').forEach(function (img) {
+    img.addEventListener('click', function () {
+      openLightbox(img.src.replace(/w=\d+/, 'w=1800'));
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('on');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lightbox.classList.contains('on')) closeLightbox();
+  });
+
+  /* --- CALL BUTTON ACTION --- */
+  callButton.addEventListener('click', function (e) {
+    var phoneNumber = "+254183456213";
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      // Let default action happen
+    }
+  });
+
+  /* --- AUTHENTICATION FOR UPLOAD --- */
+  triggerUpload.addEventListener('click', function (e) {
+    e.preventDefault();
+    
+    // Menu will close automatically due to the event listener added above
+    
+    authModal.classList.add('on');
+    authUser.value = '';
+    authPass.value = '';
+    authError.style.display = 'none';
+    setTimeout(function() { authUser.focus(); }, 100);
+  });
+
+  function closeAuthModal() {
+    authModal.classList.remove('on');
+  }
+
+  authCancel.addEventListener('click', closeAuthModal);
+  
+  authModal.addEventListener('click', function(e) {
+    if (e.target === authModal) closeAuthModal();
+  });
+
+  function handleLogin() {
+    var user = authUser.value.trim();
+    var pass = authPass.value;
+
+    if (user === "Job's crest" && pass === "Mylan@1234q") {
+      closeAuthModal();
+      projectUpload.click();
+    } else {
+      authError.style.display = 'block';
+      authPass.value = ''; 
+      authPass.focus();
+    }
+  }
+
+  authSubmit.addEventListener('click', handleLogin);
+  
+  authUser.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') authPass.focus();
+  });
+  authPass.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') handleLogin();
+  });
+
+
+  /* --- DYNAMIC GALLERY UPLOAD & DELETE FEATURE --- */
+  function createGalleryItem(src, label, id, isDeletable) {
+    var div = document.createElement('div');
+    div.className = 'strip-item';
+    div.setAttribute('data-label', label || 'New Project');
+    div.setAttribute('data-id', id);
+
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = label || 'Uploaded Project';
+    img.className = 'js-lb';
+    
+    img.addEventListener('click', function () {
+      openLightbox(img.src);
+    });
+    
+    div.appendChild(img);
+
+    if (isDeletable) {
+      var delBtn = document.createElement('button');
+      delBtn.className = 'delete-btn';
+      delBtn.innerHTML = '×';
+      delBtn.title = 'Delete Photo';
+      delBtn.setAttribute('aria-label', 'Delete Photo');
+
+      delBtn.addEventListener('click', function (e) {
+        e.stopPropagation(); 
+        
+        if (confirm('Are you sure you want to delete this photo?')) {
+          div.style.opacity = '0';
+          setTimeout(function() { div.remove(); }, 300); 
+
+          try {
+            var currentSaved = JSON.parse(localStorage.getItem('jobsCrestGallery') || '[]');
+            var filtered = currentSaved.filter(function (item) {
+              var itemId = (typeof item === 'string') ? null : item.id;
+              return itemId !== id;
+            });
+            localStorage.setItem('jobsCrestGallery', JSON.stringify(filtered));
+          } catch (err) {
+            console.warn('Could not update storage after deletion.', err);
+          }
+        }
+      });
+
+      div.appendChild(delBtn);
+    }
+
+    galleryGrid.appendChild(div);
+  }
+
+  try {
+    var savedImages = JSON.parse(localStorage.getItem('jobsCrestGallery') || '[]');
+    savedImages.forEach(function (item) {
+      if (typeof item === 'string') {
+        createGalleryItem(item, 'Uploaded Project', Date.now() + Math.random(), true);
+      } else {
+        createGalleryItem(item.src, 'Uploaded Project', item.id, true);
+      }
+    });
+  } catch (e) {
+    console.warn('Could not load saved gallery images.');
+  }
+
+  projectUpload.addEventListener('change', function (e) {
+    var files = e.target.files;
+    if (!files.length) return;
+
+    Array.from(files).forEach(function (file) {
+      if (!file.type.startsWith('image/')) return;
+
+      var reader = new FileReader();
+      
+      reader.onload = function (event) {
+        var src = event.target.result;
+        var uniqueId = Date.now().toString() + '-' + Math.random().toString(36).substring(2, 9);
+        
+        createGalleryItem(src, 'Uploaded Project', uniqueId, true);
+
+        try {
+          var currentSaved = JSON.parse(localStorage.getItem('jobsCrestGallery') || '[]');
+          currentSaved.push({ id: uniqueId, src: src });
+          localStorage.setItem('jobsCrestGallery', JSON.stringify(currentSaved));
+        } catch (err) {
+          console.warn('Storage limit reached. Image shows now but may not persist.', err);
+        }
+      };
+      
+      reader.readAsDataURL(file);
+    });
+    
+    e.target.value = '';
+  });
+
+})();
+</script>
+</body>
+</html>
