@@ -919,6 +919,11 @@
     .reveal { opacity: 1; transform: none; transition: none; }
     *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
   }
+
+  /* ============ DELETE BUTTON — ALWAYS VISIBLE ON TOUCH DEVICES ============ */
+  @media (hover: none) {
+    .delete-btn { opacity: 1; }
+  }
 </style>
 </head>
 <body>
@@ -1185,7 +1190,7 @@
     <div class="strip-head reveal">
       <div>
         <span class="eyebrow">Selected Work</span>
-        <h2 style="margin-top:1.2rem;">Projects Done.</h2>
+        <h2 style="margin-top:1.2rem;">Projects done</h2>
       </div>
       <!-- Upload button removed from here and moved to menu -->
     </div>
@@ -1395,8 +1400,8 @@
 <!-- ================= AUTH LOGIN MODAL ================= -->
 <div class="auth-modal" id="authModal">
   <div class="auth-box">
-    <h3>Authentication Required</h3>
-    <p>Please enter your credentials to upload project photos.</p>
+    <h3 id="authTitle">Authentication Required</h3>
+    <p id="authMessage">Please enter your credentials to upload project photos.</p>
     
     <div class="auth-field">
       <label for="authUser">Username</label>
@@ -1468,6 +1473,8 @@
   // Auth Elements
   var triggerUpload = document.getElementById('triggerUpload');
   var authModal     = document.getElementById('authModal');
+  var authTitle     = document.getElementById('authTitle');
+  var authMessage   = document.getElementById('authMessage');
   var authUser      = document.getElementById('authUser');
   var authPass      = document.getElementById('authPass');
   var authError     = document.getElementById('authError');
@@ -1629,9 +1636,6 @@
   lightbox.addEventListener('click', function (e) {
     if (e.target === lightbox) closeLightbox();
   });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && lightbox.classList.contains('on')) closeLightbox();
-  });
 
   /* --- CALL BUTTON ACTION --- */
   callButton.addEventListener('click', function (e) {
@@ -1642,26 +1646,47 @@
     }
   });
 
-  /* --- AUTHENTICATION FOR UPLOAD --- */
-  triggerUpload.addEventListener('click', function (e) {
-    e.preventDefault();
-    
-    // Menu will close automatically due to the event listener added above
-    
+  /* ============================================================
+     AUTHENTICATION — used for BOTH uploading AND deleting
+     ============================================================ */
+  var pendingAuthAction = null;
+
+  function openAuthModal(config) {
+    pendingAuthAction = config.onSuccess || null;
+    authTitle.textContent = config.title || 'Authentication Required';
+    authMessage.textContent = config.message || 'Please enter your credentials to continue.';
     authModal.classList.add('on');
+    document.body.style.overflow = 'hidden';
     authUser.value = '';
     authPass.value = '';
     authError.style.display = 'none';
-    setTimeout(function() { authUser.focus(); }, 100);
-  });
-
-  function closeAuthModal() {
-    authModal.classList.remove('on');
+    setTimeout(function () { authUser.focus(); }, 100);
   }
 
-  authCancel.addEventListener('click', closeAuthModal);
-  
-  authModal.addEventListener('click', function(e) {
+  function closeAuthModal(clearPending) {
+    authModal.classList.remove('on');
+    document.body.style.overflow = '';
+    if (clearPending !== false) {
+      pendingAuthAction = null;
+    }
+  }
+
+  triggerUpload.addEventListener('click', function (e) {
+    e.preventDefault();
+    openAuthModal({
+      title: 'Authentication Required',
+      message: 'Please enter your credentials to upload project photos.',
+      onSuccess: function () {
+        projectUpload.click();
+      }
+    });
+  });
+
+  authCancel.addEventListener('click', function () {
+    closeAuthModal();
+  });
+
+  authModal.addEventListener('click', function (e) {
     if (e.target === authModal) closeAuthModal();
   });
 
@@ -1669,27 +1694,36 @@
     var user = authUser.value.trim();
     var pass = authPass.value;
 
-    if (user === "Job's crest" && pass === "Mylan@1234q") {
-      closeAuthModal();
-      projectUpload.click();
+    var validUser = "job's crest";
+    var validPass = "Mylan@1234q";
+
+    if (user.toLowerCase() === validUser && pass === validPass) {
+      var action = pendingAuthAction;
+      closeAuthModal(false); // keep action reference before clearing
+      pendingAuthAction = null;
+      if (typeof action === 'function') {
+        setTimeout(action, 50);
+      }
     } else {
       authError.style.display = 'block';
-      authPass.value = ''; 
+      authPass.value = '';
       authPass.focus();
     }
   }
 
   authSubmit.addEventListener('click', handleLogin);
-  
-  authUser.addEventListener('keypress', function(e) {
+
+  authUser.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') authPass.focus();
   });
-  authPass.addEventListener('keypress', function(e) {
+  authPass.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') handleLogin();
   });
 
 
-  /* --- DYNAMIC GALLERY UPLOAD & DELETE FEATURE --- */
+  /* ============================================================
+     GALLERY — dynamic upload, delete (with auth), persistence
+     ============================================================ */
   function createGalleryItem(src, label, id, isDeletable) {
     var div = document.createElement('div');
     div.className = 'strip-item';
@@ -1700,11 +1734,11 @@
     img.src = src;
     img.alt = label || 'Uploaded Project';
     img.className = 'js-lb';
-    
+
     img.addEventListener('click', function () {
       openLightbox(img.src);
     });
-    
+
     div.appendChild(img);
 
     if (isDeletable) {
@@ -1715,23 +1749,33 @@
       delBtn.setAttribute('aria-label', 'Delete Photo');
 
       delBtn.addEventListener('click', function (e) {
-        e.stopPropagation(); 
-        
-        if (confirm('Are you sure you want to delete this photo?')) {
-          div.style.opacity = '0';
-          setTimeout(function() { div.remove(); }, 300); 
+        e.stopPropagation();
 
-          try {
-            var currentSaved = JSON.parse(localStorage.getItem('jobsCrestGallery') || '[]');
-            var filtered = currentSaved.filter(function (item) {
-              var itemId = (typeof item === 'string') ? null : item.id;
-              return itemId !== id;
-            });
-            localStorage.setItem('jobsCrestGallery', JSON.stringify(filtered));
-          } catch (err) {
-            console.warn('Could not update storage after deletion.', err);
+        // Require credentials before deleting
+        openAuthModal({
+          title: 'Authentication Required',
+          message: 'Please enter your credentials to delete this photo.',
+          onSuccess: function () {
+            // Ask for confirmation AFTER successful login
+            if (!confirm('Are you sure you want to delete this photo?')) return;
+
+            div.style.opacity = '0';
+            setTimeout(function () { div.remove(); }, 300);
+
+            try {
+              var currentSaved = JSON.parse(localStorage.getItem('jobsCrestGallery') || '[]');
+              var filtered = currentSaved.filter(function (item) {
+                var itemId = (typeof item === 'string')
+                  ? 'legacy-' + item.length + '-' + item.slice(-24)
+                  : item.id;
+                return itemId !== id;
+              });
+              localStorage.setItem('jobsCrestGallery', JSON.stringify(filtered));
+            } catch (err) {
+              console.warn('Could not update storage after deletion.', err);
+            }
           }
-        }
+        });
       });
 
       div.appendChild(delBtn);
@@ -1740,19 +1784,82 @@
     galleryGrid.appendChild(div);
   }
 
+  /* --- Load saved images, migrate legacy entries --- */
   try {
     var savedImages = JSON.parse(localStorage.getItem('jobsCrestGallery') || '[]');
+    var migrated = [];
+
     savedImages.forEach(function (item) {
       if (typeof item === 'string') {
-        createGalleryItem(item, 'Uploaded Project', Date.now() + Math.random(), true);
+        var stableId = 'legacy-' + item.length + '-' + item.slice(-24);
+        createGalleryItem(item, 'Uploaded Project', stableId, true);
+        migrated.push({ id: stableId, src: item });
       } else {
         createGalleryItem(item.src, 'Uploaded Project', item.id, true);
+        migrated.push(item);
       }
     });
+
+    localStorage.setItem('jobsCrestGallery', JSON.stringify(migrated));
   } catch (e) {
     console.warn('Could not load saved gallery images.');
   }
 
+  /* --- Static (pre-existing) gallery items also get delete buttons with auth --- */
+  (function attachDeleteToStaticItems() {
+    var staticItems = galleryGrid.querySelectorAll('.strip-item[data-label]');
+    staticItems.forEach(function (div, index) {
+      // Skip items that already contain a delete button (dynamic items)
+      if (div.querySelector('.delete-btn')) return;
+
+      // Use a stable ID so we can remember deletions across reloads
+      var staticId = 'static-' + index;
+      div.setAttribute('data-id', staticId);
+
+      var delBtn = document.createElement('button');
+      delBtn.className = 'delete-btn';
+      delBtn.innerHTML = '×';
+      delBtn.title = 'Delete Photo';
+      delBtn.setAttribute('aria-label', 'Delete Photo');
+
+      // Hide the item if it was previously deleted
+      try {
+        var hiddenStatics = JSON.parse(localStorage.getItem('jobsCrestHiddenStatics') || '[]');
+        if (hiddenStatics.indexOf(staticId) !== -1) {
+          div.style.display = 'none';
+        }
+      } catch (e) { /* ignore */ }
+
+      delBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        openAuthModal({
+          title: 'Authentication Required',
+          message: 'Please enter your credentials to delete this photo.',
+          onSuccess: function () {
+            if (!confirm('Are you sure you want to delete this photo?')) return;
+
+            div.style.opacity = '0';
+            setTimeout(function () { div.remove(); }, 300);
+
+            try {
+              var hiddenStatics = JSON.parse(localStorage.getItem('jobsCrestHiddenStatics') || '[]');
+              if (hiddenStatics.indexOf(staticId) === -1) {
+                hiddenStatics.push(staticId);
+                localStorage.setItem('jobsCrestHiddenStatics', JSON.stringify(hiddenStatics));
+              }
+            } catch (err) {
+              console.warn('Could not persist static deletion.', err);
+            }
+          }
+        });
+      });
+
+      div.appendChild(delBtn);
+    });
+  })();
+
+  /* --- Upload handler (after login) --- */
   projectUpload.addEventListener('change', function (e) {
     var files = e.target.files;
     if (!files.length) return;
@@ -1760,12 +1867,17 @@
     Array.from(files).forEach(function (file) {
       if (!file.type.startsWith('image/')) return;
 
+      if (file.size > 1.5 * 1024 * 1024) {
+        alert('"' + file.name + '" is too large (max 1.5 MB). Please compress it first.');
+        return;
+      }
+
       var reader = new FileReader();
-      
+
       reader.onload = function (event) {
         var src = event.target.result;
         var uniqueId = Date.now().toString() + '-' + Math.random().toString(36).substring(2, 9);
-        
+
         createGalleryItem(src, 'Uploaded Project', uniqueId, true);
 
         try {
@@ -1773,14 +1885,25 @@
           currentSaved.push({ id: uniqueId, src: src });
           localStorage.setItem('jobsCrestGallery', JSON.stringify(currentSaved));
         } catch (err) {
-          console.warn('Storage limit reached. Image shows now but may not persist.', err);
+          alert('Could not save this photo — browser storage is full. ' +
+                'Delete some older uploads and try again.');
         }
       };
-      
+
       reader.readAsDataURL(file);
     });
-    
+
     e.target.value = '';
+  });
+
+  /* --- ESCAPE KEY: lightbox + auth modal --- */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (lightbox.classList.contains('on')) {
+      closeLightbox();
+    } else if (authModal.classList.contains('on')) {
+      closeAuthModal();
+    }
   });
 
 })();
